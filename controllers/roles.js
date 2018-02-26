@@ -1,51 +1,56 @@
 const express = require('express');
 
-const roleManager = express();
+const roles = express();
 
-let roles = [];
+let rolesDB = [];
 
 let idCounter = 0;
 
-// ROLES
-
-roleManager.post('/create', (req, res) => {
+// create
+roles.post('/create', (req, res) => {
   let rolename = req.query.rolename;
   let rolesObject = {
     id: idCounter,
     rolename: rolename
   };
-  roles.push(rolesObject);
+  rolesDB.push(rolesObject);
   idCounter++;
   res.json({action: 'create', success: true});
 });
 
-roleManager.get('/', (req, res) => {
-  res.json(roles);
+// index
+roles.get('/', (req, res) => {
+  res.json(rolesDB);
 });
 
-roleManager.get('/:id', (req, res) => {
+// show
+roles.get('/:id', (req, res) => {
   let id = req.params.id;
   res.json({
     id: id, action: 'show'});
 });
 
-roleManager.get('/new', (req, res) => {
+// new
+roles.get('/new', (req, res) => {
   res.json({action: 'new'});
 });
 
-roleManager.get('/:id/edit', (req, res) => {
+// edit
+roles.get('/:id/edit', (req, res) => {
   let id = req.params.id;
   res.json({id: id, action: 'edit'});
 });
 
-roleManager.put('/:id/update', (req, res) => {
+// update
+roles.put('/:id/update', (req, res) => {
   let id = req.params.id;
   res.json({id: id, action: 'update'});
 });
 
-roleManager.delete('/:id/delete', (req, res) => {
+// destroy
+roles.delete('/:id/delete', (req, res) => {
   let id = req.params.id;
-  arrayRemove(roles, id);
+  arrayRemove(rolesDB, id);
   res.json({id: id, action: 'delete'});
 });
 
@@ -54,4 +59,4 @@ const arrayRemove = (array, valueToRemove) => {
   array.splice(index, 1);
 };
 
-module.exports = roleManager;
+module.exports = roles;
