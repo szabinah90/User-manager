@@ -1,4 +1,5 @@
 let usersDB = [];
+// {id: 0, username: 'zoli'}, {id: 1, username: 'bela'}
 
 let idCounter = 0;
 
@@ -7,10 +8,8 @@ const getAll = () => {
 };
 
 const get = (id) => {
-  usersDB.forEach((user) => {
-    if (user.id === id) {
-      return user;
-    }
+  return usersDB.find((user) => {
+    return user.id === id;
   });
 };
 
@@ -25,13 +24,10 @@ const create = (userObj) => {
 };
 
 const destroy = (id) => {
-  usersDB.forEach((user) => {
-    if (user.id === id) {
-      let index = user.indexOf(id);
-      let userToDel = usersDB.splice(index, 1);
-      return userToDel;
-    }
-  });
+  let user = get(id);
+  let index = usersDB.indexOf(user);
+  usersDB.splice(index, 1);
+  return user;
 };
 
 module.exports = {
