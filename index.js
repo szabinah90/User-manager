@@ -2,8 +2,8 @@ const express = require('express');
 
 const index = express();
 
-const roles = require('./controllers/roles.js'); // '.js' is not necessary (but I prefer)
-const users = require('./controllers/users.js');
+const roles = require('./controllers/roles'); // '.js' is not necessary (but I prefer)
+const users = require('./controllers/users');
 
 index.use('/roles', roles);
 index.use('/users', users);

@@ -6,8 +6,8 @@ const userModel = require('./../models/user.js');
 
 // index
 users.get('/', (req, res) => {
-  let database = userModel.getAll();
-  res.json(database);
+  let usersDatabase = userModel.getAll();
+  res.json(usersDatabase);
 });
 
 // create

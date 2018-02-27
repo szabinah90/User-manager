@@ -1,5 +1,4 @@
 let usersDB = [];
-// {id: 0, username: 'zoli'}, {id: 1, username: 'bela'}
 
 let idCounter = 0;
 

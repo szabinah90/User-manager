@@ -2,32 +2,25 @@ const express = require('express');
 
 const roles = express();
 
-let rolesDB = [];
-
-let idCounter = 0;
-
-// create
-roles.post('/create', (req, res) => {
-  let rolename = req.query.rolename;
-  let rolesObject = {
-    id: idCounter,
-    rolename: rolename
-  };
-  rolesDB.push(rolesObject);
-  idCounter++;
-  res.json({action: 'create', success: true});
-});
+const roleModel = require('./../models/role.js');
 
 // index
 roles.get('/', (req, res) => {
-  res.json(rolesDB);
+  let rolesDatabase = roleModel.getAll();
+  res.json(rolesDatabase);
+});
+
+// create
+roles.post('/create', (req, res) => {
+  let createdRole = roleModel.create({rolename: req.query.rolename});
+  res.json(createdRole);
 });
 
 // show
 roles.get('/:id', (req, res) => {
-  let id = req.params.id;
-  res.json({
-    id: id, action: 'show'});
+  let id = parseInt(req.params.id);
+  let role = roleModel.get(id);
+  res.json(role);
 });
 
 // new
@@ -49,14 +42,9 @@ roles.put('/:id/update', (req, res) => {
 
 // destroy
 roles.delete('/:id/delete', (req, res) => {
-  let id = req.params.id;
-  arrayRemove(rolesDB, id);
-  res.json({id: id, action: 'delete'});
+  let id = parseInt(req.params.id);
+  let role = roleModel.destroy(id);
+  res.json(role);
 });
-
-const arrayRemove = (array, valueToRemove) => {
-  let index = array.indexOf(valueToRemove);
-  array.splice(index, 1);
-};
 
 module.exports = roles;
