@@ -23,10 +23,10 @@ const create = (userObj) => {
 };
 
 const destroy = (id) => {
-  let user = get(id);
-  let index = usersDB.indexOf(user);
+  let userToDelete = get(id);
+  let index = usersDB.indexOf(userToDelete);
   usersDB.splice(index, 1);
-  return user;
+  return userToDelete;
 };
 
 module.exports = {

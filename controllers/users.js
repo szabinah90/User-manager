@@ -43,8 +43,8 @@ users.put('/:id/update', (req, res) => {
 // destroy
 users.delete('/:id/delete', (req, res) => {
   let id = parseInt(req.params.id);
-  let user = userModel.destroy(id);
-  res.json(user);
+  let deletedUser = userModel.destroy(id);
+  res.json(deletedUser);
 });
 
 module.exports = users;

@@ -23,10 +23,10 @@ const create = (roleObj) => {
 };
 
 const destroy = (id) => {
-  let role = get(id);
-  let index = rolesDB.indexOf(role);
+  let roleToDelete = get(id);
+  let index = rolesDB.indexOf(roleToDelete);
   rolesDB.splice(index, 1);
-  return role;
+  return roleToDelete;
 };
 
 module.exports = {

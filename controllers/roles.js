@@ -43,8 +43,8 @@ roles.put('/:id/update', (req, res) => {
 // destroy
 roles.delete('/:id/delete', (req, res) => {
   let id = parseInt(req.params.id);
-  let role = roleModel.destroy(id);
-  res.json(role);
+  let deletedRole = roleModel.destroy(id);
+  res.json(deletedRole);
 });
 
 module.exports = roles;
