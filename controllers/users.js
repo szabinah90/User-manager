@@ -2,37 +2,26 @@ const express = require('express');
 
 const users = express();
 
-let usersDB = [];
+const userModel = require('./../models/user.js');
 
-let idCounter = 0;
-
-const arrayRemove = (array, valueToRemove) => {
-  let index = array.indexOf(valueToRemove);
-  array.splice(index, 1);
-};
+users.use(userModel);
 
 // index
 users.get('/', (req, res) => {
-  res.json(usersDB);
+  let database = userModel.getAll();
+  res.json(database);
 });
 
 // create
 users.post('/create', (req, res) => {
-  let username = req.query.username;
-  let userObject = {
-    id: idCounter,
-    username: username
-  };
-  usersDB.push(userObject);
-  idCounter++;
-  res.json({action: 'create', success: true, object: userObject});
+  let createdUser = userModel.create({username: req.query.username});
+  res.json(createdUser);
 });
 
 // show
 users.get('/:id', (req, res) => {
-  let id = req.params.id;
-  res.json({ // sends back a json file which contains the input argument. / res.send('valami') --> this returns the string 'valami'
-    id: id, action: 'show'});
+  let user = userModel.get(req.params.id);
+  res.json(user);
 });
 
 // new
@@ -54,9 +43,8 @@ users.put('/:id/update', (req, res) => {
 
 // destroy
 users.delete('/:id/delete', (req, res) => {
-  let id = req.params.id;
-  arrayRemove(usersDB, id);
-  res.json({id: id, action: 'delete'});
+  let deletedUser = userModel.destroy({id: req.params.id});
+  res.json(deletedUser);
 });
 
 module.exports = users;
